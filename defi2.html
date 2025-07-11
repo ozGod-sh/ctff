@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Défi 2 – Exploitation web</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <script src="js/ctf-main-timer.js" defer></script>
+  <style>
+    .glitch {
+      color: #ff3e3e;
+      text-shadow: 2px 0 #00ff9d, -2px 0 #fff;
+      letter-spacing: 0.04em;
+    }
+    .err503 {
+      color: #ffe066;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    .corrupt {
+      background: repeating-linear-gradient(90deg, #222 0 2px, #333 2px 4px);
+      color: #ff3e3e;
+      font-family: monospace;
+    }
+    .popup-indice {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 14, 23, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .popup-indice-content {
+      background: #101828;
+      border: 2px solid #00ff9d;
+      border-radius: 16px;
+      padding: 2rem 2.5rem;
+      color: #00ff9d;
+      font-size: 1.1em;
+      box-shadow: 0 0 24px #00ff9d33;
+      text-align: center;
+    }
+    .popup-indice button {
+      margin-top: 1.5rem;
+    }
+    .feedback-error {
+      color: #ff3e3e;
+      background: #2a0000;
+      border: 1px solid #ff3e3e;
+      border-radius: 8px;
+      padding: 0.7em 1.2em;
+      margin-top: 1em;
+      font-weight: bold;
+      animation: shake 0.3s;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-2px); }
+      100% { transform: translateX(0); }
+    }
+        .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(0, 255, 231, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 231, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: grid-move 20s linear infinite;
+  }
+  @keyframes grid-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+  }
+    /* Amélioration de la visibilité des boutons */
+    .btn-primary {
+      background: #00ff9d !important;
+      color: #000000 !important;
+      border: 2px solid #00ff9d !important;
+      font-weight: bold !important;
+      transition: all 0.3s ease !important;
+      box-shadow: 0 0 10px rgba(0, 255, 157, 0.3) !important;
+    }
+    .btn-primary:hover {
+      background: #00d882 !important;
+      color: #000000 !important;
+      box-shadow: 0 0 20px rgba(0, 255, 157, 0.6) !important;
+      transform: translateY(-2px) !important;
+    }
+    .btn-close {
+      background: #00ff9d !important;
+      color: #000000 !important;
+      border: 2px solid #00ff9d !important;
+      font-weight: bold !important;
+      padding: 8px 16px !important;
+      border-radius: 6px !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    .btn-close:hover {
+      background: #00d882 !important;
+      transform: scale(1.05) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0a0e17] text-gray-200 flex flex-col custom-scrollbar cyber-grid">
+  <header class="w-full py-4 px-6 border-b border-primary/30 flex justify-between items-center sticky top-0 z-10 backdrop-blur-sm bg-[#0a0e17]/80">
+    <div class="flex items-center">
+      <a href="index.html" class="orbitron text-sm md:text-base hover:underline">CTF by CYBERSEC-BJ.TECH</a>
+    </div>
+    <div class="flex items-center space-x-6">
+      <div class="hidden md:flex items-center space-x-4">
+        <div class="text-red-500 orbitron font-bold blink text-sm md:text-base">CONFIDENTIEL</div>
+        <div class="h-4 w-px bg-gray-500"></div>
+        <div class="text-primary orbitron text-sm md:text-base">OPÉRATION PHÉNIX</div>
+      </div>
+      <div class="flex items-center bg-black/50 px-3 py-1 rounded border border-primary/30">
+        <i class="ri-time-line mr-2 text-primary"></i>
+        <div id="countdown" class="orbitron text-sm md:text-base">--:--:--</div>
+      </div>
+    </div>
+  </header>
+  <main class="flex-1 container mx-auto px-4 py-10 max-w-2xl flex flex-col items-center justify-center">
+    <div class="w-full bg-black/60 border border-primary/30 rounded-lg p-8 shadow-lg">
+      <div class="flex items-center mb-4 gap-3">
+        <i class="ri-global-line text-primary text-2xl"></i>
+        <h2 class="orbitron text-xl text-primary">Défi 2 : <span class="glitch">Exploitation web</span></h2>
+      </div>
+      <div class="mb-6 text-sm">
+        <div class="err503">ALERTE – INTERFACE COMPROMISE</div>
+        <div class="corrupt mt-2">[BL4CKH4T] Serveur web piégé – <span class="glitch">Activité suspecte détectée...</span></div>
+        <div class="mt-2">Un champ de recherche semble anodin. Mais il cache une anomalie. Une information sensible pourrait s'y dissimuler.</div>
+        <div class="mt-2">Objectif : <span class="text-primary">Décelez la faiblesse et révélez l'information cachée.</span></div>
+      </div>
+      <form id="searchForm" class="flex flex-col gap-4 mt-6">
+        <label for="searchInput" class="text-primary font-bold">🔎 Recherche sur le serveur compromis</label>
+        <input type="text" id="searchInput" name="search" placeholder="Tapez votre requête..." class="w-full px-4 py-2 rounded bg-[#101828] border border-primary/30 text-primary focus:outline-none focus:ring-2 focus:ring-primary/40" required autocomplete="off">
+        <button type="submit" class="btn-primary px-6 py-2 rounded transition flex items-center justify-center text-base">
+          <i class="ri-search-line mr-2"></i>Rechercher
+        </button>
+        <div id="searchError" class="feedback-error hidden">Aucune information trouvée. Essayez une autre requête.</div>
+        <div id="searchFlag" class="text-green-400 text-base mt-2 hidden">
+          <span class="font-bold">Information sensible révélée !</span><br>
+          <span class="text-primary">Préparez-vous à l'étape suivante.</span>
+        </div>
+      </form>
+      <div class="flex flex-col items-end mt-4 space-y-2">
+        <button id="showHintBtn1" class="text-xs text-primary underline px-2 py-1 rounded border border-primary/20 hover:bg-primary/10 transition"><i class="ri-lightbulb-flash-line mr-1"></i>Indice</button>
+        <button id="showHintBtn2" class="text-xs text-primary underline px-2 py-1 rounded border border-primary/20 hover:bg-primary/10 transition"><i class="ri-lightbulb-flash-line mr-1"></i>Indice 2</button>
+      </div>
+      <div id="popupIndice1" class="popup-indice" style="display:none;">
+        <div class="max-w-xs w-full bg-black/80 border-2 border-primary/40 rounded-xl p-8 shadow-2xl text-center flex flex-col items-center">
+          <i class="ri-eye-line text-4xl text-primary mb-4 animate-pulse"></i>
+          <div class="orbitron text-lg text-primary mb-2">Indice</div>
+          <div class="text-gray-200 mb-4">BL4CKH4T murmure : "Parfois, styler c'est bien, mais scripter c'est mieux... Une petite différence transforme la beauté en chaos."</div>
+          <button class="px-4 py-2 bg-white text-black font-bold rounded transition hover:bg-gray-200 flex items-center justify-center text-base border-2 border-white"><i class="ri-close-line mr-2"></i>Fermer</button>
+        </div>
+      </div>
+      <div id="popupIndice2" class="popup-indice" style="display:none;">
+        <div class="max-w-md w-full bg-black/80 border-2 border-primary/40 rounded-xl p-8 shadow-2xl text-center flex flex-col items-center">
+          <i class="ri-lightbulb-flash-line text-4xl text-primary mb-4 animate-pulse"></i>
+          <div class="orbitron text-lg text-primary mb-2">Indice 2</div>
+          <div class="text-gray-200 mb-4">Tu sais, j'adore les images qui ne s'affichent pas, les graphiques vectoriels qui se chargent, et ce bon vieux langage de café... Tous mes amis pour faire du bruit sur une page !</div>
+          <button class="px-4 py-2 bg-white text-black font-bold rounded transition hover:bg-gray-200 flex items-center justify-center text-base border-2 border-white"><i class="ri-close-line mr-2"></i>Fermer</button>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-8">
+      <a href="index.html" class="text-primary underline text-sm"><i class="ri-arrow-left-line mr-1"></i>Retour à l'accueil</a>
+    </div>
+  </main>
+  <footer class="w-full py-6 px-6 border-t border-primary/30 mt-auto text-gray-400">
+    <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mb-4 md:mb-0">
+                <p class="text-sm">&copy; 2025 ctf by CYBERSEC-BJ.TECH</p>
+                <div class="text-xs text-gray-500 flex items-center justify-center md:justify-start gap-2 mt-2" style="font-family: 'Share Tech Mono', monospace;">
+                    <i class="ri-git-branch-line"></i>
+                    <span>Crée et designé par <a href="https://github.com/ozGod" target="_blank" rel="noopener noreferrer" class="text-primary/80 hover:text-primary transition-colors"><strong>ozGod</strong></a> pour <a href="#" class="text-primary/80 hover:text-primary font-bold transition-colors">BJWHITEHATs</a></span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-xs px-2 py-1 bg-black/50 border border-primary/20 rounded flex items-center">
+                    <i class="ri-server-line text-primary mr-1"></i>
+                    <span>SERVEURS: OPÉRATIONNELS</span>
+                </div>
+                <div class="text-xs px-2 py-1 bg-black/50 border border-primary/20 rounded flex items-center">
+                    <i class="ri-user-3-line text-primary mr-1"></i>
+                    <span>AGENTS ACTIFS: <span id="activeAgents">--</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-primary/10 text-center text-xs text-gray-600">
+            <p>Ce site est une simulation à but ludique et pédagogique. Toute ressemblance avec des entités réelles est fictive. <a href="clauses.html" class="underline hover:text-primary">Lire le disclaimer complet</a>.</p>
+        </div>
+    </div>
+</footer>
+  <script type="module" src="./js/dynamic-dates.js"></script>
+  <script type="module" src="./js/defi2.js"></script>
+<script src="js/index.js"></script>
+<script src="js/static-status.js"></script>
+</body>
+</html>

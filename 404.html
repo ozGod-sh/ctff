@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page non trouvée – Opération PHÉNIX</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: radial-gradient(ellipse at 60% 40%, #1a233a 0%, #0a0e17 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .fade-in {
+      animation: fadeIn 1.2s cubic-bezier(.39,.58,.57,1) both;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+      100% { opacity: 1; transform: none; }
+    }
+    .btn-glow:hover {
+      box-shadow: 0 0 0 2px #00ff9d, 0 0 12px 2px #00ff9d44;
+      transition: box-shadow 0.2s;
+    }
+    .orbitron { font-family: 'Orbitron', Arial, sans-serif; }
+    .bg-primary { background: #00ffe7 !important; }
+    .text-primary { color: #00ffe7 !important; }
+    .border-primary { border-color: #00ffe7 !important; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0a0e17] text-gray-200 flex flex-col">
+  <main class="flex-1 flex flex-col items-center justify-center px-4 py-10 relative z-10">
+    <div class="max-w-md w-full bg-black/70 border border-primary/30 rounded-lg p-8 shadow-lg text-center fade-in">
+      <div class="flex flex-col items-center mb-6">
+        <i class="ri-error-warning-fill text-primary text-5xl animate-pulse mb-2"></i>
+        <h2 class="orbitron text-2xl md:text-3xl text-primary mb-1">Erreur 404 – Page non trouvée</h2>
+        <span class="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded">Opération PHÉNIX</span>
+      </div>
+      <div class="mb-6 text-gray-400">La page demandée n'existe pas.<br>Vérifiez l'URL ou retournez à l'accueil.</div>
+      <a href="index.html" class="px-5 py-2 bg-primary text-black font-bold rounded transition hover:bg-primary/90 btn-glow text-base focus:ring-2 focus:ring-primary/50"><i class="ri-home-line mr-2"></i>Retour à l'accueil</a>
+    </div>
+  </main>
+  <footer class="w-full py-4 px-6 border-t border-primary/30 mt-8 text-center text-xs text-gray-500">
+    &copy; <span class="copyright-year">Chargement...</span> ctf by CYBERSEC-BJ.TECH – Page non trouvée.
+  </footer>
+</body>
+</html> 

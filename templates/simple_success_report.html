@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport de Succès - Opération PHÉNIX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 20mm;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                background: #0a0e17 !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+                print-color-adjust: exact;
+                font-size: 12px;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .container {
+                max-width: none;
+                margin: 0;
+                padding: 20px;
+                min-height: auto;
+            }
+            .report-card {
+                max-width: none;
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background: #0a0e17;
+            color: #e5e7eb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .report-card {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(0, 255, 231, 0.3);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .icon-header {
+            margin-bottom: 24px;
+        }
+
+        .success-icon {
+            color: #00ffe7;
+            font-size: 4rem;
+            margin-bottom: 16px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .main-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00ffe7;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            background: rgba(0, 255, 231, 0.2);
+            color: #00ffe7;
+            padding: 4px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        .mission-info {
+            margin-bottom: 24px;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            line-height: 1.5;
+        }
+
+        .mission-info span {
+            margin: 0 8px;
+        }
+
+        .agent-name {
+            color: #00ffe7;
+            font-weight: bold;
+        }
+
+        .content-section {
+            margin: 24px 0;
+            text-align: left;
+        }
+
+        .success-message {
+            color: #34d399;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .challenges-summary {
+            background: rgba(0, 255, 231, 0.05);
+            border: 1px solid rgba(0, 255, 231, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .challenges-title {
+            font-family: 'Orbitron', monospace;
+            color: #00ffe7;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .challenges-title i {
+            margin-right: 8px;
+            color: #fbbf24;
+        }
+
+        .thank-you {
+            color: #fbbf24;
+            font-weight: bold;
+            margin: 24px 0;
+            font-size: 1rem;
+        }
+
+        .signature {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 255, 231, 0.2);
+        }
+
+        .team-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00ffe7;
+            margin-bottom: 8px;
+        }
+
+        .pawn-highlight {
+            color: #ef4444;
+        }
+
+        .generation-date {
+            font-size: 0.7rem;
+            color: #6b7280;
+            margin-top: 16px;
+        }
+
+        .print-button {
+            background: #00ffe7;
+            color: #0a0e17;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .print-button:hover {
+            background: #00d4aa;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .report-card {
+                padding: 24px;
+            }
+            
+            .main-title {
+                font-size: 1.5rem;
+            }
+            
+            .success-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="report-card">
+            <!-- Header avec icône -->
+            <div class="icon-header">
+                <i class="ri-shield-check-line success-icon"></i>
+                <h1 class="main-title">Rapport de Succès</h1>
+                <span class="subtitle">OPÉRATION PHÉNIX</span>
+            </div>
+
+            <!-- Informations de mission -->
+            <div class="mission-info">
+                <span>ÉMIS PAR : Commandant de la Cyberdéfense</span> •
+                <span>DESTINATAIRE : <span class="agent-name">{{AGENT_PSEUDO}}</span></span> •
+                <span>{{GENERATION_DATE}} à {{GENERATION_TIME}}</span>
+            </div>
+
+            <!-- Contenu principal -->
+            <div class="content-section">
+                <div class="success-message">
+                    🎉 MISSION ACCOMPLIE — Opération PHÉNIX
+                </div>
+
+                <p style="margin-bottom: 16px;">
+                    Agent <strong>{{AGENT_PSEUDO}}</strong>, vous avez réussi l'impossible. L'attaque de BL4CKH4T a été neutralisée avant <span class="timer-end-time">{{END_TIME}}</span>.
+                    <span style="color: #00ffe7;">Le Bénin est sauvé. Les systèmes critiques sont restaurés.</span>
+                </p>
+
+                <!-- Résumé des défis -->
+                <div class="challenges-summary">
+                    <div class="challenges-title">
+                        <i class="ri-flag-line"></i>
+                        Défis complétés avec succès
+                    </div>
+                    <p>
+                        Votre infiltration a été parfaite. Vous avez résolu l'<strong>Analyse Forensique</strong> pour identifier l'attaquant, 
+                        maîtrisé l'<strong>Exploitation XSS</strong> pour recueillir des données critiques, déchiffré le <strong>Token JWT</strong> 
+                        pour accéder aux systèmes protégés, et utilisé le <strong>Terminal Simulé</strong> pour neutraliser les menaces. 
+                        Chaque défi résolu vous a mené au cœur du système ennemi.
+                    </p>
+                </div>
+
+                <div class="thank-you">
+                    🏆 Félicitations, agent. Vous avez prouvé que même dans les heures les plus sombres, la lumière peut triompher.
+                </div>
+            </div>
+
+            <!-- Bouton d'impression -->
+            <button class="print-button no-print" onclick="window.print()">
+                <i class="ri-download-line" style="margin-right: 8px;"></i>
+                TÉLÉCHARGER EN PDF
+            </button>
+
+            <!-- Signature -->
+            <div class="signature">
+                <div style="margin-bottom: 12px;">Merci d'avoir participé!</div>
+                <div class="team-name">
+                    -- L'équipe <span class="pawn-highlight">PAWN</span>BLACKHAT
+                </div>
+                <div class="generation-info">
+                    <div style="font-size: 0.65rem; color: #6b7280; margin-top: 12px;">
+                        © {{GENERATION_DATE}} CYBERSEC-BJ.TECH - CTF Opération PHÉNIX
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

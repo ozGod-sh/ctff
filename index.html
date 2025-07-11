@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTF by CYBERSEC-BJ.TECH - Opération PHÉNIX</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="js/dynamic-dates.js"></script>
+<script src="./js/ambiance.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<link rel="stylesheet" href="css/index.css">
+<script src="js/ctf-main-timer.js" defer></script>
+<style>
+  body {
+    background-color: #0a0e17;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(0, 255, 231, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 231, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: grid-move 20s linear infinite;
+  }
+  @keyframes grid-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+  }
+  .btn-light {
+        background: #ffffff;
+        color: #000000;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+    .btn-light:hover {
+        background: #f0f0f0;
+        box-shadow: 0 0 15px rgba(0, 255, 231, 0.8);
+        transform: translateY(-2px);
+    }
+  .fade-in {
+    animation: fadeIn 1.2s cubic-bezier(.39,.58,.57,1) both;
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+    100% { opacity: 1; transform: none; }
+  }
+  .btn-glow:hover {
+    box-shadow: 0 0 0 2px #00ff9d, 0 0 12px 2px #00ff9d44;
+    transition: box-shadow 0.2s;
+  }
+  .mission-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .mission-card:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 8px 32px #00ffe733;
+    border-color: #00ffe7;
+  }
+  .archive-anim {
+    animation: fadeIn 1.2s cubic-bezier(.39,.58,.57,1) both;
+  }
+  .orbitron { font-family: 'Orbitron', Arial, sans-serif; }
+  .bg-primary { background: #00ffe7 !important; }
+  .text-primary { color: #00ffe7 !important; }
+  .border-primary { border-color: #00ffe7 !important; }
+  .rounded-button { border-radius: 0.5rem; }
+  .blink { animation: blink 1.2s steps(1) infinite; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+</style>
+</head>
+<body class="min-h-screen custom-scrollbar cyber-grid">
+<div class="alert-triangle-bg" aria-hidden="true">
+  <svg viewBox="0 0 160 144" class="alert-triangle-svg">
+    <!-- Triangle équilatéral très arrondi -->
+    <path d="M80,28 Q90,38 140,124 Q150,140 130,140 L30,140 Q10,140 20,124 Q70,38 80,28 Z" fill="none" stroke="#00ffe7" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" opacity="0.7"/>
+    <!-- Barre du point d'exclamation -->
+    <rect x="74" y="65" width="12" height="38" rx="6" fill="#00ffe7" opacity="0.7"/>
+    <!-- Point du point d'exclamation -->
+    <circle cx="80" cy="115" r="7" fill="#00ffe7" opacity="0.7"/>
+  </svg>
+</div>
+<div id="preloader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0a0e17] transition-opacity duration-700" style="font-family: 'Share Tech Mono', 'Fira Mono', 'Fira Code', 'Consolas', monospace;">
+  <div class="relative w-full flex justify-center items-start" style="height: 160px;">
+    <div class="relative flex flex-col items-center">
+      <svg id="antenna-svg" width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="45" cy="55" rx="28" ry="18" fill="#101828" stroke="#00ff88" stroke-width="2" opacity="0.8"/>
+        <path d="M17 55 Q45 25 73 55" stroke="#00ff88" stroke-width="2" fill="none" opacity="0.7"/>
+        <rect x="42" y="55" width="6" height="18" rx="2" fill="#00ff88" fill-opacity="0.18" stroke="#00ff88" stroke-width="1.2"/>
+        <circle cx="45" cy="38" r="4" fill="#00ff88"/>
+        <rect x="43" y="34" width="4" height="8" rx="1.5" fill="#00ff88" fill-opacity="0.5"/>
+        <path d="M45 38 Q45 30 55 22" stroke="#00ff88" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.7"/>
+        <path d="M45 38 Q45 30 35 22" stroke="#00ff88" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.7"/>
+      </svg>
+      <div id="satellite-packets">
+        <span class="satellite-dot" style="--i:0;"></span>
+        <span class="satellite-dot" style="--i:1;"></span>
+        <span class="satellite-dot" style="--i:2;"></span>
+        <span class="satellite-dot" style="--i:3;"></span>
+      </div>
+    </div>
+  </div>
+  <div class="preloader-terminal mt-2 bg-black/80 max-w-lg w-[95%] text-primary text-sm md:text-base relative">
+    <div id="preloader-terminal-lines" class="preloader-terminal-lines text-primary/90 leading-relaxed min-h-[80px]" style="font-family: 'Share Tech Mono', 'Fira Mono', 'Fira Code', 'Consolas', monospace;"></div>
+  </div>
+</div>
+<div class="particles" id="particles"></div>
+<canvas id="matrixCanvas" class="matrix-bg"></canvas>
+<header class="w-full py-4 px-6 border-b border-primary/30 flex justify-between items-center sticky top-0 z-10 backdrop-blur-sm bg-[#0a0e17]/80">
+<div class="flex items-center">
+<a href="index.html" class="orbitron text-sm md:text-base hover:underline">CTF by CYBERSEC-BJ.TECH</a>
+</div>
+<div class="flex items-center space-x-6">
+<div class="hidden md:flex items-center space-x-4">
+<div class="text-red-500 orbitron font-bold blink text-sm md:text-base">CONFIDENTIEL</div>
+<div class="h-4 w-px bg-gray-500"></div>
+<div class="text-primary orbitron text-sm md:text-base">OPÉRATION PHÉNIX</div>
+</div>
+<div class="flex items-center bg-black/50 px-3 py-1 rounded border border-primary/30">
+<i class="ri-time-line mr-2 text-primary"></i>
+<div id="countdown" class="orbitron text-sm md:text-base">--:--:--</div>
+</div>
+</div>
+</header>
+<main class="container mx-auto px-4 py-8">
+<div class="text-red-500 orbitron font-bold blink text-center md:hidden mb-4">CONFIDENTIEL - OPÉRATION PHÉNIX</div>
+<section class="mb-16 relative">
+<div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent -z-10"></div>
+<div class="max-w-4xl mx-auto">
+<div class="hexagon-bg p-6 border border-primary/30 rounded-lg backdrop-blur-sm bg-black/40 relative overflow-hidden archive-anim" id="confidentialBlock">
+<div class="absolute top-2 right-2 flex items-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+</div>
+<div class="flex items-start space-x-6">
+<div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gray-800 border-2 border-primary/50 flex items-center justify-center overflow-hidden flex-shrink-0">
+  <!-- SVG aigle stylisé, dark, rouge -->
+  <svg viewBox="0 0 64 64" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="eagleDark" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#2d2d2d"/>
+        <stop offset="100%" stop-color="#0a0e17"/>
+      </radialGradient>
+      <linearGradient id="eagleRed" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#ff2d2d"/>
+        <stop offset="1" stop-color="#a80000"/>
+      </linearGradient>
+    </defs>
+    <ellipse cx="32" cy="32" rx="30" ry="30" fill="url(#eagleDark)"/>
+    <path d="M12 44 Q32 20 52 44 Q44 36 32 36 Q20 36 12 44Z" fill="url(#eagleRed)" stroke="#ff2d2d" stroke-width="2"/>
+    <path d="M32 36 Q34 30 40 28 Q36 28 32 32 Q28 28 24 28 Q30 30 32 36Z" fill="#fff" fill-opacity="0.12"/>
+    <path d="M32 32 Q34 30 36 28 Q32 29 28 28 Q30 30 32 32Z" fill="#fff" fill-opacity="0.18"/>
+    <path d="M32 36 Q33 34 36 33 Q34 33 32 34 Q30 33 28 33 Q31 34 32 36Z" fill="#fff" fill-opacity="0.10"/>
+    <ellipse cx="32" cy="32" rx="30" ry="30" fill="none" stroke="#ff2d2d" stroke-width="1.5"/>
+    <circle cx="40" cy="36" r="2.2" fill="#fff" stroke="#ff2d2d" stroke-width="1.2"/>
+    <ellipse cx="40" cy="36" rx="0.7" ry="1.1" fill="#ff2d2d"/>
+    <path d="M32 36 Q32 40 36 44 Q32 42 28 44 Q32 40 32 36Z" fill="#ff2d2d" fill-opacity="0.7"/>
+  </svg>
+</div>
+<div class="flex-1">
+<div class="flex items-center mb-2">
+<h2 class="orbitron text-lg md:text-xl text-primary mr-2">⚠️ Transmission Ultra-Confidentielle – Niveau Z-Alpha</h2>
+<span class="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded">OPÉRATION PHÉNIX</span>
+</div>
+<div class="mb-4 text-xs text-gray-400">
+<span>ÉMIS PAR : Commandant de la Cyberdéfense nationale</span> •
+<span>DESTINATAIRE : [Redacted] – ex-Agent Spectre</span> •
+<span class="mission-issued-date">Chargement...</span>
+</div>
+<div id="commanderMessage" class="space-y-4 text-sm md:text-base">
+<p class="text-red-400 font-bold">📡 Situation critique — État d'effondrement imminent</p>
+<p>Le Bénin est frappé par une cyberattaque sans précédent. Un assaut coordonné, invisible, total.<br>
+<span class="text-primary">Le système bancaire est hors service. Les communications nationales sont paralysées. Les réseaux énergétiques sont instables. Les hôpitaux opèrent désormais hors ligne.</span></p>
+<p>L'assaillant est un esprit hors-norme. Il se fait appeler : <span class="text-red-500 font-bold">BL4CKH4T</span>.<br>
+Un hacker de génie. Silencieux, précis, dangereux. Il frappe sans raison apparente, mais avec une maîtrise presque chirurgicale.<br>
+Son style : <span class="text-primary">chaos méthodique</span>. Sa signature : <span class="text-primary">disparition totale après frappe</span>.</p>
+<p class="text-red-400">❌ Toutes les tentatives ont échoué.<br>
+Nos meilleurs analystes sont mobilisés depuis 6h du matin. Nos firewalls renforcés. Nos pare-feux, nos VPN, nos IA de défense…<br>
+<span class="text-primary">Rien n'a tenu.</span> BL4CKH4T connaît nos protocoles mieux que nous.<br>
+La CNIN a tenté l'impossible pendant plus de 10 heures. Les défenses sont tombées, une à une.<br>
+<span class="text-red-500">Le pays est au bord de la rupture.</span></p>
+<p>Il ne reste qu'un seul nom. Un fantôme. Un mythe. <span class="text-primary">Vous.</span></p>
+<p><span class="text-primary">👤 Dossier Spectre — Réactivation autorisée</span><br>
+Ancien prodige. Hacker de l'impossible. Recruté jeune. Redouté très tôt.<br>
+À 25 ans, un drame familial vous a arraché à nos lignes. Vous avez quitté le front. Disparu dans l'ombre.<br>
+<span class="text-primary">Mais ce soir, la légende doit renaître.</span></p>
+<p><span class="text-yellow-400">🎯 Mission : Remonter la piste, neutraliser, sauver</span><br>
+Opération PHÉNIX est lancée. Objectif : infiltrer le système de BL4CKH4T, remonter ses traces, comprendre sa structure, et stopper l'attaque avant 00h00.<br>
+<span class="text-primary">00h00 marque la fin du compte à rebours. Après… ce ne sera plus une crise. Ce sera une chute nationale.</span></p>
+<p><span class="text-primary">📬 Dernier message du Commandant</span><br>
+Agent, vous êtes le dernier recours. Il n'y a plus de plan B. Le pays tout entier repose sur vos épaules.<br>
+<span class="text-primary">Montrez à BL4CKH4T que la lumière peut encore jaillir de tout ce chaos.</span><br>
+<span class="text-yellow-400">Bonne chance. Que le Phénix renaisse de ses cendres à travers vous.</span></p>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-primary/30 flex justify-between items-center">
+<div class="flex items-center text-xs text-gray-400">
+<i class="ri-shield-check-line text-primary mr-1"></i>
+<span class="animated-secure animated-scan">CANAL SÉCURISÉ</span>
+<span class="mx-2">•</span>
+<i class="ri-eye-line text-primary mr-1"></i>
+<span class="animated-secure animated-scan">NIVEAU D'ACCRÉDITATION: Z-ALPHA</span>
+</div>
+<div class="flex items-center space-x-2">
+<button class="text-xs px-2 py-1 bg-primary/10 text-primary border border-primary/30 !rounded-button hover:bg-primary/20 transition" id="archiveBtn">
+<i class="ri-file-copy-line mr-1"></i>
+<span>ARCHIVER</span>
+</button>
+<button class="text-xs px-2 py-1 bg-red-500/10 text-red-500 border border-red-500/30 !rounded-button hover:bg-red-500/20 transition" id="effacerBtn">
+<i class="ri-delete-bin-line mr-1"></i>
+<span>EFFACER</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div id="archiveCard" class="archive-card" style="display:none;">
+  <i class="ri-folder-shield-fill text-primary text-3xl"></i>
+</div>
+<section class="mb-16">
+<div class="text-center mb-10">
+<h2 class="orbitron text-2xl md:text-3xl text-primary mb-2">LES 4 DÉFIS – SÉQUENCE D'OPÉRATIONS CRITIQUES</h2>
+<p class="max-w-2xl mx-auto text-gray-400">Chaque défi vous rapproche de la vérité sur BL4CKH4T. Le sort du pays dépend de votre réussite.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+<a href="challenges.html" class="block">
+<div class="mission-card p-6 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 opacity-10">
+<i class="ri-code-line text-primary text-8xl"></i>
+</div>
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center mr-4">
+<i class="ri-code-line text-primary text-2xl"></i>
+</div>
+<div>
+<h3 class="orbitron text-lg text-primary">DÉFI 1 : ANALYSE DE CODE</h3>
+<p class="text-sm text-gray-400">Décryptez la trace laissée par BL4CKH4T sur une page gouvernementale corrompue.</p>
+</div>
+</div>
+<p class="text-sm mb-4">Un nom caché dans l'ombre du code. Saurez-vous le révéler ?</p>
+<div class="flex justify-between items-center">
+<div class="flex items-center">
+<span class="text-xs text-gray-400 mr-2">DIFFICULTÉ:</span>
+<div class="flex space-x-1">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+</div>
+</div>
+<span class="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded">ACCÉDER</span>
+</div>
+</div>
+</a>
+<a href="challenges.html" class="block">
+<div class="mission-card p-6 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 opacity-10">
+<i class="ri-global-line text-primary text-8xl"></i>
+</div>
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center mr-4">
+<i class="ri-global-line text-primary text-2xl"></i>
+</div>
+<div>
+<h3 class="orbitron text-lg text-primary">DÉFI 2 : EXPLOITATION WEB</h3>
+<p class="text-sm text-gray-400">Infiltrez l'infrastructure web de BL4CKH4T et percez ses défenses.</p>
+</div>
+</div>
+<p class="text-sm mb-4">Ses failles sont votre porte d'entrée. À vous de les trouver.</p>
+<div class="flex justify-between items-center">
+<div class="flex items-center">
+<span class="text-xs text-gray-400 mr-2">DIFFICULTÉ:</span>
+<div class="flex space-x-1">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+</div>
+</div>
+<span class="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded">ACCÉDER</span>
+</div>
+</div>
+</a>
+<a href="challenges.html" class="block">
+<div class="mission-card p-6 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 opacity-10">
+<i class="ri-arrow-up-line text-primary text-8xl"></i>
+</div>
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center mr-4">
+<i class="ri-arrow-up-line text-primary text-2xl"></i>
+</div>
+<div>
+<h3 class="orbitron text-lg text-primary">DÉFI 3 : ÉLÉVATION DE PRIVILÈGES</h3>
+<p class="text-sm text-gray-400">Prenez le contrôle des accès internes compromis par BL4CKH4T.</p>
+</div>
+</div>
+<p class="text-sm mb-4">Identifiez et neutralisez les portes dérobées. Restaurez la sécurité.</p>
+<div class="flex justify-between items-center">
+<div class="flex items-center">
+<span class="text-xs text-gray-400 mr-2">DIFFICULTÉ:</span>
+<div class="flex space-x-1">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+<div class="w-2 h-2 rounded-full bg-gray-600"></div>
+</div>
+</div>
+<span class="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded">ACCÉDER</span>
+</div>
+</div>
+</a>
+<a href="challenges.html" class="block">
+<div class="mission-card p-6 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 opacity-10">
+<i class="ri-terminal-box-line text-primary text-8xl"></i>
+</div>
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center mr-4">
+<i class="ri-terminal-box-line text-primary text-2xl"></i>
+</div>
+<div>
+<h3 class="orbitron text-lg text-primary">DÉFI 4 : PRISE DE CONTRÔLE</h3>
+<p class="text-sm text-gray-400">Affrontez BL4CKH4T dans sa console principale. L'ultime confrontation.</p>
+</div>
+</div>
+<p class="text-sm mb-4">Le sort du pays se joue ici. Serez-vous à la hauteur ?</p>
+<div class="flex justify-between items-center">
+<div class="flex items-center">
+<span class="text-xs text-gray-400 mr-2">DIFFICULTÉ:</span>
+<div class="flex space-x-1">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+</div>
+</div>
+<span class="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded">ACCÉDER</span>
+</div>
+</div>
+</a>
+</div>
+</div>
+</section>
+<section class="mb-16">
+<div class="max-w-4xl mx-auto bg-black/50 border border-primary/30 rounded-lg p-8 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent -z-10"></div>
+<div class="text-center mb-8">
+<h2 class="orbitron text-2xl md:text-3xl text-primary mb-2">ACCEPTEZ-VOUS LA MISSION?</h2>
+<p class="text-gray-400 max-w-2xl mx-auto">Le temps presse. Chaque seconde qui passe rapproche le pays d'un effondrement numérique total. Votre expertise est notre seul espoir.</p>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6">
+<button id="acceptMission" class="btn-light orbitron w-full md:w-auto px-8 py-4 !rounded-button whitespace-nowrap flex items-center justify-center bg-red-500 text-white hover:bg-green-500 hover:text-white transition-all duration-300">
+<i class="ri-shield-check-line mr-2"></i>
+ACCEPTER LA MISSION
+</button>
+<button id="viewClassified" class="btn-light orbitron w-full md:w-auto px-8 py-4 !rounded-button whitespace-nowrap flex items-center justify-center">
+<i class="ri-file-lock-line mr-2"></i>
+DOSSIER CLASSIFIÉ
+</button>
+</div>
+<div class="mt-8 pt-6 border-t border-primary/30">
+<div class="flex items-center justify-between text-xs text-gray-500">
+<div class="flex items-center">
+<i class="ri-eye-line mr-1 text-primary"></i>
+<span>NIVEAU D'ACCRÉDITATION REQUIS: MAXIMUM</span>
+</div>
+<div class="flex items-center">
+<i class="ri-time-line mr-1 text-primary"></i>
+<span>DURÉE ESTIMÉE: 4 HEURES</span>
+</div>
+<div class="flex items-center">
+<i class="ri-user-follow-line mr-1 text-primary"></i>
+<span>STATUT: EN ATTENTE</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="mb-8">
+<div class="max-w-4xl mx-auto">
+<div class="bg-black/30 border border-primary/20 rounded-lg p-6">
+<h3 class="orbitron text-lg text-primary mb-4">PARAMÈTRES SYSTÈME</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="text-sm text-gray-400">NIVEAU DE DIFFICULTÉ</label>
+<input type="range" id="difficultyRange" min="1" max="3" value="1" class="custom-range w-full" disabled>
+<span id="difficultyValue" class="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded">DÉBUTANT</span>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>DÉBUTANT</span>
+<span>STANDARD</span>
+<span>EXPERT</span>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="text-sm text-gray-400">SONS D'AMBIANCE</label>
+<label class="relative inline-flex items-center cursor-pointer">
+<input type="checkbox" id="soundToggle" class="sr-only peer" checked>
+<div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center">
+<input type="range" id="volumeRange" min="0" max="100" value="5" class="custom-range w-full">
+<div class="w-8 h-8 flex items-center justify-center">
+<i id="volumeIcon" class="ri-volume-up-line text-primary"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="w-full py-6 px-6 border-t border-primary/30 mt-auto text-gray-400">
+    <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mb-4 md:mb-0">
+                <p class="text-sm">&copy; 2025 ctf by CYBERSEC-BJ.TECH</p>
+                <div class="text-xs text-gray-500 flex items-center justify-center md:justify-start gap-2 mt-2" style="font-family: 'Share Tech Mono', monospace;">
+                    <i class="ri-git-branch-line"></i>
+                    <span>Crée et designé par <a href="https://github.com/ozGod" target="_blank" rel="noopener noreferrer" class="text-primary/80 hover:text-primary transition-colors"><strong>ozGod</strong></a> pour <a href="#" class="text-primary/80 hover:text-primary font-bold transition-colors">BJWHITEHATs</a></span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-xs px-2 py-1 bg-black/50 border border-primary/20 rounded flex items-center">
+                    <i class="ri-server-line text-primary mr-1"></i>
+                    <span>SERVEURS: OPÉRATIONNELS</span>
+                </div>
+                <div class="text-xs px-2 py-1 bg-black/50 border border-primary/20 rounded flex items-center">
+                    <i class="ri-user-3-line text-primary mr-1"></i>
+                    <span>AGENTS ACTIFS: <span id="activeAgents">--</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-primary/10 text-center text-xs text-gray-600">
+            <p>Ce site est une simulation à but ludique et pédagogique. Toute ressemblance avec des entités réelles est fictive. <a href="clauses.html" class="underline hover:text-primary">Lire le disclaimer complet</a>.</p>
+        </div>
+    </div>
+</footer>
+<!-- Ancien modal supprimé pour éviter les conflits -->
+<audio id="ambianceAudio" src="song/song.mp3" loop preload="auto" style="display:none"></audio>
+
+
+<!-- <script src="js/index.js"></script> -->
+
+
+  <!-- Mission Confirmation Modal -->
+  <div id="mission-confirmation-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+    <div class="bg-[#0a0e17] border border-primary/50 rounded-lg shadow-lg max-w-md w-full p-6 text-center relative animate-fade-in">
+      <button id="modal-close-button" class="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors">
+        <i class="ri-close-line text-2xl"></i>
+      </button>
+      <h2 class="text-2xl font-bold text-primary orbitron mb-4">CONFIRMATION REQUISE</h2>
+      <p class="text-gray-300 mb-6">En acceptant cette mission, vous vous engagez à respecter les règles d'engagement du CTF. Toute violation entraînera une disqualification immédiate.</p>
+      <div class="flex justify-center space-x-4">
+        <button id="modal-confirm-button" class="bg-green-500 text-white font-bold py-2 px-6 rounded hover:bg-green-600 transition-all duration-300">Confirmer</button>
+        <button id="modal-cancel-button" class="bg-secondary text-white font-bold py-2 px-6 rounded hover:bg-red-700 transition-all duration-300">Annuler</button>
+      </div>
+      <div class="mt-6 text-xs">
+        <a href="regles-ctf.html" target="_blank" class="text-gray-500 hover:text-primary underline">Lire les règles d'engagement</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dossier Classifié Modal -->
+  <div id="classified-dossier-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+    <div class="bg-[#0a0e17] border-2 border-primary/50 rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden relative animate-fade-in">
+      <button id="classified-dossier-close" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10">
+        <i class="ri-close-line text-2xl"></i>
+      </button>
+      
+      <div class="p-8 overflow-y-auto max-h-[calc(90vh-2rem)]">
+        <div class="text-center mb-8">
+          <div class="flex items-center justify-center mb-4">
+            <i class="ri-folder-shield-fill text-primary text-4xl mr-3"></i>
+            <h2 class="text-3xl font-bold text-primary orbitron">DOSSIER CLASSIFIÉ : OPÉRATION PHÉNIX</h2>
+          </div>
+          <div class="flex items-center justify-center space-x-4 text-xs text-gray-400">
+            <span class="bg-red-500/20 text-red-400 px-2 py-1 rounded">NIVEAU MAXIMUM</span>
+            <span class="bg-primary/20 text-primary px-2 py-1 rounded">CONFIDENTIEL</span>
+            <span class="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">URGENT</span>
+          </div>
+        </div>
+
+        <div class="space-y-8 text-gray-200 leading-relaxed">
+          
+          <section class="border-l-4 border-primary/50 pl-6">
+            <h3 class="text-xl font-bold text-primary orbitron mb-3">📋 CONTEXTE HISTORIQUE</h3>
+            <p class="mb-4">Le Bénin, petit pays d'Afrique de l'Ouest, a connu une transformation numérique fulgurante ces dernières années. De 2016 à 2024, le pays s'est positionné comme un hub technologique régional, attirant investissements étrangers et talents locaux. Cette croissance rapide a créé une dépendance critique aux systèmes numériques.</p>
+            <p class="mb-4">En 2023, le gouvernement béninois a lancé l'initiative "Bénin Digital 2025", visant à numériser 80% des services publics. Cette ambition, louable, a créé une surface d'attaque étendue pour les cybercriminels.</p>
+            <p>Le 15 janvier 2025, à 06h00 précises, l'impensable s'est produit : une cyberattaque coordonnée frappe simultanément les systèmes bancaires, énergétiques, de santé et de communication du pays.</p>
+          </section>
+
+          <section class="border-l-4 border-red-500/50 pl-6">
+            <h3 class="text-xl font-bold text-red-400 orbitron mb-3">🎯 L'ENNEMI : BL4CKH4T</h3>
+            <p class="mb-4">BL4CKH4T n'est pas un hacker ordinaire. Son profil psychologique, établi par nos analystes, révèle un génie du chaos avec une obsession pour la perfection technique. Ancien consultant en cybersécurité pour plusieurs gouvernements africains, il a disparu en 2022 après un incident controversé au Nigeria.</p>
+            <p class="mb-4">Sa signature : des attaques chirurgicales, des backdoors sophistiquées, et une disparition totale après chaque frappe. Il ne laisse jamais de traces, sauf quand il le veut. Son message est clair : "La sécurité est une illusion."</p>
+            <p class="text-red-300 font-semibold">⚠️ Dernière activité connue : 14 janvier 2025, 23h47 - Infiltration du réseau principal de la CNIN (Commission Nationale de l'Informatique et de la Numérisation).</p>
+          </section>
+
+          <section class="border-l-4 border-yellow-500/50 pl-6">
+            <h3 class="text-xl font-bold text-yellow-400 orbitron mb-3">⚡ CHRONOLOGIE DE LA CRISE</h3>
+            <div class="space-y-3 text-sm">
+              <div class="flex items-start">
+                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold mr-3 mt-1">06:00</span>
+                <div>
+                  <strong class="text-red-400">Attaque initiale</strong> - Paralysie simultanée des serveurs bancaires principaux
+                </div>
+              </div>
+              <div class="flex items-start">
+                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold mr-3 mt-1">06:15</span>
+                <div>
+                  <strong class="text-red-400">Propagation</strong> - Les systèmes de communication mobile et fixe sont compromis
+                </div>
+              </div>
+              <div class="flex items-start">
+                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold mr-3 mt-1">06:30</span>
+                <div>
+                  <strong class="text-red-400">Infrastructure critique</strong> - Les réseaux électriques commencent à dysfonctionner
+                </div>
+              </div>
+              <div class="flex items-start">
+                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold mr-3 mt-1">07:00</span>
+                <div>
+                  <strong class="text-red-400">Santé publique</strong> - Les hôpitaux passent en mode dégradé, les dossiers patients inaccessibles
+                </div>
+              </div>
+              <div class="flex items-start">
+                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold mr-3 mt-1">08:00</span>
+                <div>
+                  <strong class="text-red-400">Panique sociale</strong> - Les réseaux sociaux et médias sont saturés, désinformation massive
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="border-l-4 border-blue-500/50 pl-6">
+            <h3 class="text-xl font-bold text-blue-400 orbitron mb-3">🛡️ RÉPONSE DES AUTORITÉS</h3>
+            <p class="mb-4">La CNIN a immédiatement activé le protocole "Bouclier Numérique", mobilisant tous les experts en cybersécurité du pays. Les équipes de la Brigade Spéciale de Lutte contre la Cybercriminalité (BSLC) ont été déployées dans les centres de données critiques.</p>
+            <p class="mb-4">Malgré les efforts, chaque contre-mesure mise en place a été contournée en quelques minutes. BL4CKH4T semble anticiper chaque mouvement, chaque stratégie de défense. Nos firewalls renforcés, nos VPN sécurisés, nos IA de détection d'intrusion... Rien n'a tenu.</p>
+            <p class="text-blue-300 font-semibold">💡 Réalisation : BL4CKH4T a infiltré nos systèmes bien avant l'attaque. Il connaît nos protocoles mieux que nous.</p>
+          </section>
+
+          <section class="border-l-4 border-green-500/50 pl-6">
+            <h3 class="text-xl font-bold text-green-400 orbitron mb-3">👤 L'AGENT SPECTRE</h3>
+            <p class="mb-4">Vous êtes l'Agent Spectre, ancien prodige de la cybersécurité recruté par la CNIN à l'âge de 19 ans. Votre expertise en reverse engineering et en exploitation de vulnérabilités vous a valu une réputation légendaire dans le milieu.</p>
+            <p class="mb-4">En 2022, un drame familial vous a poussé à quitter le service actif. Vous avez disparu dans l'ombre, mais vos compétences n'ont jamais faibli. Aujourd'hui, vous êtes le dernier espoir du Bénin.</p>
+            <p class="text-green-300 font-semibold">🎯 Votre mission : Infiltrer le système de BL4CKH4T, comprendre sa structure, et neutraliser la menace avant 00h00.</p>
+          </section>
+
+          <section class="border-l-4 border-purple-500/50 pl-6">
+            <h3 class="text-xl font-bold text-purple-400 orbitron mb-3">🔍 ANALYSE TECHNIQUE</h3>
+            <p class="mb-4">L'attaque de BL4CKH4T utilise une combinaison de techniques avancées :</p>
+            <ul class="list-disc pl-6 space-y-2 text-sm">
+              <li><strong class="text-purple-300">Polymorphisme viral</strong> - Le malware change de signature à chaque propagation</li>
+              <li><strong class="text-purple-300">Rootkit kernel-level</strong> - Infiltration au niveau le plus profond du système</li>
+              <li><strong class="text-purple-300">Zero-day exploits</strong> - Utilisation de vulnérabilités inconnues</li>
+              <li><strong class="text-purple-300">Social engineering avancé</strong> - Manipulation psychologique des administrateurs</li>
+              <li><strong class="text-purple-300">Infrastructure as Code</strong> - Déploiement automatisé de l'attaque</li>
+            </ul>
+          </section>
+
+          <section class="border-l-4 border-orange-500/50 pl-6">
+            <h3 class="text-xl font-bold text-orange-400 orbitron mb-3">⏰ COMPTE À REBOURS CRITIQUE</h3>
+            <p class="mb-4">00h00 marque le point de non-retour. Après cette heure :</p>
+            <ul class="list-disc pl-6 space-y-2 text-sm">
+              <li>Les systèmes bancaires seront irrécupérables</li>
+              <li>Les données de santé seront définitivement corrompues</li>
+              <li>L'infrastructure énergétique s'effondrera</li>
+              <li>Le chaos social sera total</li>
+            </ul>
+            <p class="text-orange-300 font-semibold mt-4">🚨 Chaque minute compte. Le sort du Bénin est entre vos mains.</p>
+          </section>
+
+          <div class="text-center mt-8 pt-6 border-t border-primary/30">
+            <p class="text-xs text-gray-500 mb-4">Ce dossier est classifié niveau MAXIMUM. Toute divulgation entraînera des poursuites judiciaires.</p>
+            <div class="flex items-center justify-center space-x-2 text-xs">
+              <i class="ri-time-line text-primary"></i>
+              <span class="text-primary">Dernière mise à jour : aujourd'hui à 16h GMT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="js/index.js"></script>
+<script src="js/static-status.js"></script>
+
+</body>
+</html>

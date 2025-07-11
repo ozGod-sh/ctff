@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Défi 5 – L'Épreuve Ultime (Bientôt disponible)</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { background: radial-gradient(ellipse at 60% 40%, #1a233a 0%, #0a0e17 100%); min-height: 100vh; }
+    .orbitron { font-family: 'Orbitron', Arial, sans-serif; }
+    .bg-primary { background: #00ffe7 !important; }
+    .text-primary { color: #00ffe7 !important; }
+    .border-primary { border-color: #00ffe7 !important; }
+    .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(0, 255, 231, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 231, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: grid-move 20s linear infinite;
+  }
+  @keyframes grid-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+  }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0a0e17] text-gray-200 flex flex-col cyber-grid">
+  <main class="flex-1 flex flex-col items-center justify-center px-4 py-10 relative z-10">
+    <div class="max-w-3xl w-full bg-black/70 border border-primary/30 rounded-lg p-8 shadow-lg text-center">
+      <div class="flex flex-col items-center mb-6">
+        <i class="ri-skull-2-line text-primary text-5xl mb-2"></i>
+        <h2 class="orbitron text-2xl md:text-3xl text-primary mb-1">Défi 5 – L'Épreuve Ultime</h2>
+        <span class="text-xs bg-yellow-400/20 text-yellow-300 px-2 py-0.5 rounded animate-pulse">PROCHAINEMENT</span>
+      </div>
+      <div class="space-y-6 text-sm md:text-base text-left">
+        <p class="text-center text-gray-300">Agents, ce que vous avez affronté jusqu'ici n'était qu'un échauffement. Le Défi 5, nom de code "PROMETHEUS", est en cours de finalisation. Il a été conçu pour être l'épreuve la plus rude, un test ultime qui séparera les amateurs des véritables professionnels de la cybersécurité.</p>
+        
+        <div class="bg-gray-900/50 p-6 rounded-lg border border-primary/20">
+          <h3 class="orbitron text-lg text-primary mb-4 text-center">Un Scénario Multi-Facettes Exigeant une Maîtrise Totale</h3>
+          <p class="text-gray-400 mb-4 text-center">Préparez-vous à une investigation profonde qui combinera des techniques avancées et interdépendantes. La réussite d'une étape ne sera que la clé pour déverrouiller la complexité de la suivante. Vous devrez faire preuve de méthode, de créativité et d'une persévérance à toute épreuve.</p>
+          <ul class="list-none space-y-3 text-gray-300">
+            <li class="flex items-start"><i class="ri-arrow-right-s-fill text-primary mt-1 mr-2"></i><span><strong class="font-semibold text-white">Ingénierie Inverse & Binaire :</strong> Analyse d'un binaire propriétaire 64-bits sans symboles pour y découvrir une faille de type "buffer overflow" et extraire un algorithme de chiffrement personnalisé.</span></li>
+            <li class="flex items-start"><i class="ri-arrow-right-s-fill text-primary mt-1 mr-2"></i><span><strong class="font-semibold text-white">Cryptanalyse :</strong> Casser le chiffrement "maison" découvert précédemment, possiblement vulnérable à une attaque par canaux auxiliaires ou à une analyse différentielle.</span></li>
+            <li class="flex items-start"><i class="ri-arrow-right-s-fill text-primary mt-1 mr-2"></i><span><strong class="font-semibold text-white">Exploitation Web Avancée :</strong> Utiliser les informations déchiffrées pour exploiter une vulnérabilité de désérialisation non sécurisée sur un endpoint API caché, menant à une exécution de code à distance (RCE).</span></li>
+            <li class="flex items-start"><i class="ri-arrow-right-s-fill text-primary mt-1 mr-2"></i><span><strong class="font-semibold text-white">Pivoting & Réseau :</strong> Depuis le serveur compromis, pivoter dans un réseau interne simulé, scanner les machines, et exploiter un service vulnérable pour atteindre le serveur de contrôle final.</span></li>
+            <li class="flex items-start"><i class="ri-arrow-right-s-fill text-primary mt-1 mr-2"></i><span><strong class="font-semibold text-white">Stéganographie & OSINT :</strong> Le flag final sera dissimulé dans un flux de données sortant, encodé via une technique de stéganographie audio. Des indices sur la nature de l'encodage seront disséminés sur des profils publics liés à l'opération PHÉNIX.</span></li>
+          </ul>
+        </div>
+
+        <p class="text-center text-yellow-400 font-bold orbitron pt-4">Aiguisez vos outils. Révisez vos classiques. Restez à l'écoute.</p>
+        <p class="text-center text-xs text-gray-500">De nouvelles informations seront communiquées via des canaux sécurisés. Soyez prêts.</p>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4 justify-center mt-8">
+        <a href="index.html" class="text-xs text-gray-500 hover:text-primary transition"><i class="ri-arrow-left-line mr-1"></i>Retour à l'accueil</a>
+      </div>
+    </div>
+  </main>
+  <footer class="w-full py-6 px-6 border-t border-primary/30 mt-auto text-gray-400">
+    <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mb-4 md:mb-0">
+                <p class="text-sm">&copy; 2025 ctf by CYBERSEC-BJ.TECH</p>
+                <div class="text-xs text-gray-500 flex items-center justify-center md:justify-start gap-2 mt-2" style="font-family: 'Share Tech Mono', monospace;">
+                    <i class="ri-git-branch-line"></i>
+                    <span>Crée et designé par <a href="https://github.com/ozGod" target="_blank" rel="noopener noreferrer" class="text-primary/80 hover:text-primary transition-colors"><strong>ozGod</strong></a> pour <a href="#" class="text-primary/80 hover:text-primary font-bold transition-colors">BJWHITEHATs</a></span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-xs px-2 py-1 bg-black/50 border border-primary/20 rounded flex items-center">
+                    <i class="ri-server-line text-primary mr-1"></i>
+                    <span>SERVEURS: OPÉRATIONNELS</span>
+                </div>
+                <div class="text-xs px-2 py-1 bg-black/50 border border-primary/20 rounded flex items-center">
+                    <i class="ri-user-3-line text-primary mr-1"></i>
+                    <span>AGENTS ACTIFS: <span id="activeAgents">--</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-primary/10 text-center text-xs text-gray-600">
+            <p>Ce site est une simulation à but ludique et pédagogique. Toute ressemblance avec des entités réelles est fictive. <a href="clauses.html" class="underline hover:text-primary">Lire le disclaimer complet</a>.</p>
+        </div>
+    </div>
+</footer>
+
+  <script src="js/index.js"></script>
+  <script src="js/static-status.js"></script>
+</body>
+</html>

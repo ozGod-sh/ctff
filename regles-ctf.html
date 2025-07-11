@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Règles d'Engagement - CTF by CYBERSEC-BJ.TECH</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<link rel="stylesheet" href="css/index.css">
+<style>
+  body {
+    background-color: #0a0e17;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(0, 255, 231, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 231, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: grid-move 20s linear infinite;
+  }
+  @keyframes grid-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+  }
+  .orbitron { font-family: 'Orbitron', Arial, sans-serif; }
+  .bg-primary { background: #00ffe7 !important; }
+  .text-primary { color: #00ffe7 !important; }
+  .border-primary { border-color: #00ffe7 !important; }
+  .fade-in {
+    animation: fadeIn 1.2s cubic-bezier(.39,.58,.57,1) both;
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+    100% { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body class="min-h-screen custom-scrollbar cyber-grid">
+<canvas id="matrixCanvas" class="matrix-bg"></canvas>
+
+<header class="w-full py-4 px-6 border-b border-primary/30 flex justify-between items-center sticky top-0 z-10 backdrop-blur-sm bg-[#0a0e17]/80">
+  <div class="flex items-center">
+    <a href="index.html" class="orbitron text-sm md:text-base hover:underline text-primary">
+      <i class="ri-arrow-left-line mr-2"></i>Retour à l'Opération PHÉNIX
+    </a>
+  </div>
+  <div class="flex items-center space-x-6">
+    <div class="hidden md:flex items-center space-x-4">
+      <div class="text-red-500 orbitron font-bold blink text-sm md:text-base">CONFIDENTIEL</div>
+      <div class="h-4 w-px bg-gray-500"></div>
+      <div class="text-primary orbitron text-sm md:text-base">RÈGLES D'ENGAGEMENT</div>
+    </div>
+  </div>
+</header>
+
+<main class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto">
+    
+    <!-- En-tête -->
+    <div class="text-center mb-12 fade-in">
+      <div class="flex items-center justify-center mb-6">
+        <i class="ri-shield-check-fill text-primary text-5xl mr-4"></i>
+        <h1 class="orbitron text-4xl md:text-5xl text-primary">RÈGLES D'ENGAGEMENT</h1>
+      </div>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+        Protocole officiel de l'Opération PHÉNIX - Capture The Flag (CTF)
+      </p>
+      <div class="flex items-center justify-center space-x-4 mt-6 text-xs">
+        <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded">OBLIGATOIRE</span>
+        <span class="bg-primary/20 text-primary px-3 py-1 rounded">CONFIDENTIEL</span>
+        <span class="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded">SANCTIONS</span>
+      </div>
+    </div>
+
+    <!-- Règles principales -->
+    <div class="space-y-8">
+      
+      <!-- Section 1: Principes fondamentaux -->
+      <section class="bg-black/50 border border-primary/30 rounded-lg p-8 fade-in">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center mr-4">
+            <i class="ri-shield-star-line text-primary text-2xl"></i>
+          </div>
+          <h2 class="orbitron text-2xl text-primary">PRINCIPES FONDAMENTAUX</h2>
+        </div>
+        <div class="space-y-4 text-gray-200">
+          <div class="border-l-4 border-primary/50 pl-4">
+            <h3 class="text-lg font-bold text-primary mb-2">🎯 Objectif du CTF</h3>
+            <p>L'Opération PHÉNIX est une simulation éducative de cybersécurité. L'objectif est d'apprendre les techniques de hacking éthique dans un environnement contrôlé et sécurisé.</p>
+          </div>
+          <div class="border-l-4 border-green-500/50 pl-4">
+            <h3 class="text-lg font-bold text-green-400 mb-2">✅ Hacking Éthique</h3>
+            <p>Toutes les activités doivent respecter les principes du hacking éthique : autorisation, bienveillance, et apprentissage. Aucune attaque réelle n'est autorisée.</p>
+          </div>
+          <div class="border-l-4 border-blue-500/50 pl-4">
+            <h3 class="text-lg font-bold text-blue-400 mb-2">🤝 Collaboration</h3>
+            <p>La collaboration entre participants est encouragée, mais chaque agent doit soumettre ses propres réponses et solutions.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Règles strictes -->
+      <section class="bg-black/50 border border-red-500/30 rounded-lg p-8 fade-in">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 rounded-lg bg-red-500/20 border border-red-500/30 flex items-center justify-center mr-4">
+            <i class="ri-error-warning-line text-red-400 text-2xl"></i>
+          </div>
+          <h2 class="orbitron text-2xl text-red-400">RÈGLES STRICTES - ZÉRO TOLÉRANCE</h2>
+        </div>
+        <div class="space-y-4 text-gray-200">
+          <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+            <h3 class="text-lg font-bold text-red-400 mb-2">🚫 INTERDICTIONS ABSOLUES</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Attaques réelles</strong> - Aucune tentative d'intrusion sur des systèmes non autorisés</li>
+              <li><strong>DDoS/DoS</strong> - Interdiction de toute attaque par déni de service</li>
+              <li><strong>Social Engineering</strong> - Pas de manipulation d'humains réels</li>
+              <li><strong>Données sensibles</strong> - Interdiction de collecter des informations personnelles</li>
+              <li><strong>Outils malveillants</strong> - Pas d'utilisation de malware ou de virus</li>
+            </ul>
+          </div>
+          <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
+            <h3 class="text-lg font-bold text-yellow-400 mb-2">⚠️ SANCTIONS IMMÉDIATES</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Disqualification immédiate</strong> pour toute violation des règles</li>
+              <li><strong>Bannissement permanent</strong> de tous les événements futurs</li>
+              <li><strong>Signalement aux autorités</strong> en cas d'activité illégale</li>
+              <li><strong>Responsabilité légale</strong> pour tout dommage causé</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Structure du CTF -->
+      <section class="bg-black/50 border border-primary/30 rounded-lg p-8 fade-in">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center mr-4">
+            <i class="ri-layout-grid-line text-primary text-2xl"></i>
+          </div>
+          <h2 class="orbitron text-2xl text-primary">STRUCTURE DE L'OPÉRATION</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-primary mb-3">🎯 Les 4 Défis</h3>
+            <div class="space-y-3">
+              <div class="flex items-center">
+                <span class="bg-primary text-black px-2 py-1 rounded text-xs font-bold mr-3">1</span>
+                <span class="text-gray-300">Analyse de Code</span>
+              </div>
+              <div class="flex items-center">
+                <span class="bg-primary text-black px-2 py-1 rounded text-xs font-bold mr-3">2</span>
+                <span class="text-gray-300">Exploitation Web</span>
+              </div>
+              <div class="flex items-center">
+                <span class="bg-primary text-black px-2 py-1 rounded text-xs font-bold mr-3">3</span>
+                <span class="text-gray-300">Élévation de Privilèges</span>
+              </div>
+              <div class="flex items-center">
+                <span class="bg-primary text-black px-2 py-1 rounded text-xs font-bold mr-3">4</span>
+                <span class="text-gray-300">Prise de Contrôle Finale</span>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-primary mb-3">⏰ Contraintes Temporelles</h3>
+            <div class="space-y-3">
+              <div class="flex items-center">
+                <i class="ri-time-line text-primary mr-3"></i>
+                <span class="text-gray-300">Deadline : 00h00 GMT</span>
+              </div>
+              <div class="flex items-center">
+                <i class="ri-arrow-right-line text-primary mr-3"></i>
+                <span class="text-gray-300">Défis séquentiels</span>
+              </div>
+              <div class="flex items-center">
+                <i class="ri-lock-line text-primary mr-3"></i>
+                <span class="text-gray-300">Déblocage progressif</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Techniques autorisées -->
+      <section class="bg-black/50 border border-green-500/30 rounded-lg p-8 fade-in">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 rounded-lg bg-green-500/20 border border-green-500/30 flex items-center justify-center mr-4">
+            <i class="ri-check-line text-green-400 text-2xl"></i>
+          </div>
+          <h2 class="orbitron text-2xl text-green-400">TECHNIQUES AUTORISÉES</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-lg font-bold text-green-400 mb-3">🔍 Analyse</h3>
+            <ul class="list-disc pl-6 space-y-2 text-gray-200">
+              <li>Inspection du code source</li>
+              <li>Analyse des requêtes réseau</li>
+              <li>Reverse engineering des fichiers</li>
+              <li>Étude des métadonnées</li>
+              <li>Analyse des logs système</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-green-400 mb-3">⚡ Exploitation</h3>
+            <ul class="list-disc pl-6 space-y-2 text-gray-200">
+              <li>Injection SQL (simulée)</li>
+              <li>XSS (Cross-Site Scripting)</li>
+              <li>LFI/RFI (Local/Remote File Inclusion)</li>
+              <li>Command injection</li>
+              <li>Privilege escalation</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Outils recommandés -->
+      <section class="bg-black/50 border border-blue-500/30 rounded-lg p-8 fade-in">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 rounded-lg bg-blue-500/20 border border-blue-500/30 flex items-center justify-center mr-4">
+            <i class="ri-tools-line text-blue-400 text-2xl"></i>
+          </div>
+          <h2 class="orbitron text-2xl text-blue-400">OUTILS RECOMMANDÉS</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <i class="ri-browser-line text-blue-400 text-3xl mb-3"></i>
+            <h3 class="text-lg font-bold text-blue-400 mb-2">Navigateur</h3>
+            <p class="text-gray-300 text-sm">Inspecteur d'éléments, Console, Network tab</p>
+          </div>
+          <div class="text-center">
+            <i class="ri-terminal-line text-blue-400 text-3xl mb-3"></i>
+            <h3 class="text-lg font-bold text-blue-400 mb-2">Terminal</h3>
+            <p class="text-gray-300 text-sm">Commandes système, curl, wget</p>
+          </div>
+          <div class="text-center">
+            <i class="ri-code-line text-blue-400 text-3xl mb-3"></i>
+            <h3 class="text-lg font-bold text-blue-400 mb-2">Éditeur</h3>
+            <p class="text-gray-300 text-sm">VS Code, Notepad++, Analyse de code</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Code de conduite -->
+      <section class="bg-black/50 border border-purple-500/30 rounded-lg p-8 fade-in">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center mr-4">
+            <i class="ri-user-heart-line text-purple-400 text-2xl"></i>
+          </div>
+          <h2 class="orbitron text-2xl text-purple-400">CODE DE CONDUITE</h2>
+        </div>
+        <div class="space-y-4 text-gray-200">
+          <div class="border-l-4 border-purple-500/50 pl-4">
+            <h3 class="text-lg font-bold text-purple-400 mb-2">🤝 Respect Mutuel</h3>
+            <p>Traitement respectueux de tous les participants, organisateurs et bénévoles. Aucune forme de harcèlement ou de discrimination n'est tolérée.</p>
+          </div>
+          <div class="border-l-4 border-purple-500/50 pl-4">
+            <h3 class="text-lg font-bold text-purple-400 mb-2">💡 Partage de Connaissances</h3>
+            <p>Encouragement à partager les connaissances et techniques apprises avec la communauté, dans le respect des règles éthiques.</p>
+          </div>
+          <div class="border-l-4 border-purple-500/50 pl-4">
+            <h3 class="text-lg font-bold text-purple-400 mb-2">🎓 Apprentissage Continu</h3>
+            <p>Approche d'apprentissage et de découverte. Les erreurs font partie du processus d'apprentissage.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7: Contact et support -->
+      <section class="bg-black/50 border border-primary/30 rounded-lg p-8 fade-in">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center mr-4">
+            <i class="ri-customer-service-line text-primary text-2xl"></i>
+          </div>
+          <h2 class="orbitron text-2xl text-primary">SUPPORT ET CONTACT</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-lg font-bold text-primary mb-3">🆘 En cas de problème</h3>
+            <ul class="list-disc pl-6 space-y-2 text-gray-200">
+              <li>Vérifiez d'abord cette page de règles</li>
+              <li>Consultez la documentation technique</li>
+              <li>Contactez l'équipe d'organisation</li>
+              <li>Signalez tout comportement suspect</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-primary mb-3">📞 Contacts d'urgence</h3>
+            <div class="space-y-2 text-gray-200">
+              <div class="flex items-center">
+                <i class="ri-mail-line text-primary mr-2"></i>
+                <span>support@cybersec-bj.tech</span>
+              </div>
+              <div class="flex items-center">
+                <i class="ri-discord-line text-primary mr-2"></i>
+                <span>Discord: BJWHITEHATs</span>
+              </div>
+              <div class="flex items-center">
+                <i class="ri-telegram-line text-primary mr-2"></i>
+                <span>Telegram: @BJWHITEHATs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer de la page -->
+    <div class="text-center mt-12 pt-8 border-t border-primary/30">
+      <p class="text-gray-400 mb-4">
+        En participant à l'Opération PHÉNIX, vous acceptez de respecter l'intégralité de ces règles d'engagement.
+      </p>
+      <div class="flex items-center justify-center space-x-4">
+        <a href="index.html" class="bg-primary text-black font-bold py-3 px-6 rounded hover:bg-white transition-all duration-300 orbitron">
+          <i class="ri-arrow-left-line mr-2"></i>Retour à la Mission
+        </a>
+        <button onclick="window.print()" class="bg-gray-600 text-white font-bold py-3 px-6 rounded hover:bg-gray-700 transition-all duration-300 orbitron">
+          <i class="ri-printer-line mr-2"></i>Imprimer les Règles
+        </button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="w-full py-6 px-6 border-t border-primary/30 mt-12 text-gray-400">
+  <div class="container mx-auto text-center">
+    <p class="text-sm">&copy; 2025 CTF by CYBERSEC-BJ.TECH - Règles d'Engagement</p>
+    <div class="text-xs text-gray-500 mt-2">
+      Créé et designé par <a href="https://github.com/ozGod" target="_blank" rel="noopener noreferrer" class="text-primary/80 hover:text-primary transition-colors"><strong>ozGod</strong></a> pour <a href="#" class="text-primary/80 hover:text-primary font-bold transition-colors">BJWHITEHATs</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Animation de la matrice en arrière-plan
+document.addEventListener('DOMContentLoaded', function() {
+  const canvas = document.getElementById('matrixCanvas');
+  const ctx = canvas.getContext('2d');
+  
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  const fontSize = 12;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = [];
+  
+  for (let i = 0; i < columns; i++) {
+    drops[i] = Math.floor(Math.random() * canvas.height);
+  }
+  
+  const matrix = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}`";
+  
+  function draw() {
+    ctx.fillStyle = 'rgba(10, 14, 23, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00ffe7';
+    ctx.font = fontSize + 'px monospace';
+    
+    for (let i = 0; i < drops.length; i++) {
+      const text = matrix[Math.floor(Math.random() * matrix.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+  
+  setInterval(draw, 33);
+  
+  window.addEventListener('resize', function() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+});
+</script>
+
+</body>
+</html> 

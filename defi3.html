@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Défi 3 - Analyse de Logs Système</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <script src="js/ctf-main-timer.js" defer></script>
+    <style>
+        body { font-family: 'Fira Code', monospace; }
+        .glitch{color:#ff3e3e;text-shadow:2px 0 #00ff9d,-2px 0 #fff;letter-spacing:.04em}
+        .log-container { height: 500px; font-family: 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.4; }
+        .log-line { white-space: pre-wrap; word-break: break-all; }
+        .log-time { color: #888; }
+        .log-level-info { color: #22c55e; }
+        .log-level-warn { color: #facc15; }
+        .log-level-error { color: #ef4444; }
+        .log-level-debug { color: #38bdf8; }
+        .log-source { color: #a78bfa; }
+        .feedback-error{color:#ff3e3e;background:#2a0000;border:1px solid #ff3e3e;border-radius:8px;padding:.7em 1.2em;margin-top:1em;font-weight:700;animation:shake .3s}
+        @keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}100%{transform:translateX(0)}}
+        .popup-indice{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(10,14,23,.92);display:flex;align-items:center;justify-content:center;z-index:1000}
+        .btn-primary{background:#00ff9d!important;color:#000!important;border:2px solid #00ff9d!important;font-weight:700!important;transition:all .3s ease!important;box-shadow:0 0 10px rgba(0,255,157,.3)!important}.btn-primary:hover{background:#00d882!important;color:#000!important;box-shadow:0 0 20px rgba(0,255,157,.6)!important;transform:translateY(-2px)!important}
+        .btn-close{background:#00ff9d!important;color:#000!important;border:2px solid #00ff9d!important;font-weight:700!important;padding:8px 16px!important;border-radius:6px!important;cursor:pointer!important;transition:all .3s ease!important}.btn-close:hover{background:#00d882!important;transform:scale(1.05)!important}
+        .cyber-grid {
+          background-image: 
+            linear-gradient(rgba(0, 255, 231, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 255, 231, 0.1) 1px, transparent 1px);
+          background-size: 50px 50px;
+          animation: grid-move 20s linear infinite;
+      }
+      @keyframes grid-move {
+          0% { background-position: 0 0; }
+          100% { background-position: 50px 50px; }
+      }
+    </style>
+</head>
+<body class="min-h-screen bg-[#0a0e17] text-gray-200 flex flex-col custom-scrollbar cyber-grid">
+
+    <header class="w-full py-4 px-6 border-b border-primary/30 flex justify-between items-center sticky top-0 z-10 backdrop-blur-sm bg-[#0a0e17]/80">
+    <div class="flex items-center">
+      <a href="index.html" class="orbitron text-sm md:text-base hover:underline">CTF by CYBERSEC-BJ.TECH</a>
+    </div>
+    <div class="flex items-center space-x-6">
+      <div class="hidden md:flex items-center space-x-4">
+        <div class="text-red-500 orbitron font-bold blink text-sm md:text-base">CONFIDENTIEL</div>
+        <div class="h-4 w-px bg-gray-500"></div>
+        <div class="text-primary orbitron text-sm md:text-base">OPÉRATION PHÉNIX</div>
+      </div>
+      <div class="flex items-center bg-black/50 px-3 py-1 rounded border border-primary/30">
+        <i class="ri-time-line mr-2 text-primary"></i>
+        <div id="countdown" class="orbitron text-sm md:text-base">--:--:--</div>
+      </div>
+    </div>
+  </header>
+
+    <main class="flex-1 container mx-auto px-4 py-10 max-w-5xl flex flex-col">
+        <div class="w-full bg-black/60 border border-primary/30 rounded-lg p-8 shadow-lg">
+            <div class="flex items-center mb-4 gap-3">
+                <i class="ri-file-search-line text-primary text-2xl"></i>
+                <h2 class="orbitron text-xl text-primary">Défi 3 : <span class="glitch">Analyse de Logs Système</span></h2>
+            </div>
+            <p class="text-gray-400 mb-6">Un flux de logs en temps réel provenant d'un serveur critique a été intercepté. Zane Cipher a commis une erreur en laissant une session active.</p>
+
+            <div class="w-full log-container bg-black p-4 rounded-md overflow-y-scroll custom-scrollbar border border-gray-700">
+                <div class="log-line"><span class="log-time">[2023-10-27 10:00:01]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[kernel]</span> Booting Linux on physical CPU 0x0</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:00:02]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[systemd]</span> Systemd 254.5-1-arch starting up.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:00:05]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[network]</span> enp0s3: link is up, 1000Mbps, full-duplex, lpa 0x45E1</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:00:10]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[sshd]</span> Server listening on 0.0.0.0 port 22.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:01:15]</span> <span class="log-level-warn">[WARN]</span> <span class="log-source">[docker]</span> Failed to load container 'legacy-db', retrying...</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:01:21]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[cron]</span> Started daily man-db update.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:01:30]</span> <span class="log-level-warn">[WARN]</span> <span class="log-source">[apache2]</span> AH01276: Cannot serve directory /var/www/html/: No matching DirectoryIndex found</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:01:45]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[sshd]</span> Accepted publickey for user 'admin' from 82.65.12.34 port 54321 ssh2</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:02:03]</span> <span class="log-level-debug">[DEBUG]</span> <span class="log-source">[api-gateway]</span> Request received: GET /v1/status</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:02:04]</span> <span class="log-level-debug">[DEBUG]</span> <span class="log-source">[api-gateway]</span> Response sent: 200 OK, 15ms</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:02:15]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[systemd]</span> Starting session c2 of user zane.cipher.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:02:16]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[zane-scripts]</span> Running maintenance script /opt/scripts/backup.sh</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:02:17]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[zane-scripts]</span> Note to self: check auth mechanism. Current session token seems weak.</div>
+                <div class="log-line" data-debug-token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemFuZS5jaXBoZXIiLCJub3RlIjoiUmFwcGVsIMOgIG1vaS1tw6ptZSA6IGRlcGxhY2VyIFNTSCBkdSBwb3J0IHBhciBkZWZhdXQuIExlIG5vdXZlYXUgcG9ydCBlc3QgMjIyMiBwb3VyIGwnSVAxOTIuMTY4LjQyLjEuIEUgbGUgbW90IGRlIHBhc3NlIHRlbXBvcmFpcmUgZXN0IFphbmU8M1BocyBuaXhfMjAyNCEuIEdhcmRlciBjZSB0b2tlbiBlbiBzZWN1cml0ZS4ifQ.fake_signature_part"><span class="log-time">[2023-10-27 10:02:18]</span> <span class="log-level-debug">[DEBUG]</span> <span class="log-source">[auth-service]</span> Token validation routine started.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:02:25]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[backup.sh]</span> Backup started for /var/www/html to /mnt/backups/web.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:02:55]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[backup.sh]</span> Backup completed successfully.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:03:00]</span> <span class="log-level-error">[ERROR]</span> <span class="log-source">[cron]</span> Failed to run daily job 'cleanup_tmp'. Exit code 1.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:03:10]</span> <span class="log-level-warn">[WARN]</span> <span class="log-source">[kernel]</span> Temperature above threshold, cpu clock throttled.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:03:30]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[sshd]</span> Disconnected from user 'admin' 82.65.12.34 port 54321</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:04:00]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[firewalld]</span> Reloading firewall rules.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:04:01]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[firewalld]</span> SUCCESS.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:05:00]</span> <span class="log-level-debug">[DEBUG]</span> <span class="log-source">[api-gateway]</span> Request received: POST /v1/data/ingest</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:05:01]</span> <span class="log-level-error">[ERROR]</span> <span class="log-source">[ingest-service]</span> Invalid data format: missing 'timestamp' field.</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:05:02]</span> <span class="log-level-debug">[DEBUG]</span> <span class="log-source">[api-gateway]</span> Response sent: 400 Bad Request, 25ms</div>
+                <div class="log-line"><span class="log-time">[2023-10-27 10:05:30]</span> <span class="log-level-info">[INFO]</span> <span class="log-source">[systemd]</span> session-c2.scope: Succeeded.</div>
+            </div>
+
+            <form id="flagForm" class="flex flex-col gap-4 mt-6">
+                <label for="flagInput" class="text-primary font-bold">Saisissez le flag découvert</label>
+                <input type="text" id="flagInput" name="flag" placeholder="PHENIX{...}" class="w-full px-4 py-2 rounded bg-[#101828] border border-primary/30 text-primary focus:outline-none focus:ring-2 focus:ring-primary/40" required autocomplete="off">
+                <button type="submit" class="btn-primary px-6 py-2 rounded transition flex items-center justify-center text-base">
+                    <i class="ri-check-double-line mr-2"></i>Valider
+                </button>
+                <div id="flagError" class="feedback-error hidden"></div>
+                <div id="flagSuccess" class="text-green-400 text-base mt-2 hidden"></div>
+            </form>
+
+            <div class="flex justify-end mt-4">
+                <button id="showHintBtn" class="text-xs text-primary underline px-2 py-1 rounded border border-primary/20 hover:bg-primary/10 transition"><i class="ri-lightbulb-flash-line mr-1"></i>Indice</button>
+            </div>
+        </div>
+
+        <div id="popupIndice" class="popup-indice" style="display:none;">
+            <div class="max-w-xs w-full bg-black/80 border-2 border-primary/40 rounded-xl p-8 shadow-2xl text-center flex flex-col items-center">
+                <i class="ri-key-2-line text-4xl text-primary mb-4 animate-pulse"></i>
+                <div class="orbitron text-lg text-primary mb-2">Indice</div>
+                <div class="text-gray-200 mb-4">Les développeurs laissent parfois des notes. Surtout quand ils parlent de tokens...</div>
+                <button class="btn-close"><i class="ri-close-line mr-2"></i>Fermer</button>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="index.html" class="text-primary underline text-sm"><i class="ri-arrow-left-line mr-1"></i>Retour à l'accueil</a>
+        </div>
+    </main>
+
+    <footer class="w-full py-6 px-6 border-t border-primary/30 mt-auto text-gray-400">
+    <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mb-4 md:mb-0">
+                <p class="text-sm">&copy; 2025 ctf by CYBERSEC-BJ.TECH</p>
+                <div class="text-xs text-gray-500 flex items-center justify-center md:justify-start gap-2 mt-2" style="font-family: 'Share Tech Mono', monospace;">
+                    <i class="ri-git-branch-line"></i>
+                    <span>Crée et designé par <a href="https://github.com/ozGod" target="_blank" rel="noopener noreferrer" class="text-primary/80 hover:text-primary transition-colors"><strong>ozGod</strong></a> pour <a href="#" class="text-primary/80 hover:text-primary font-bold transition-colors">BJWHITEHATs</a></span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-xs px-2 py-1 bg-black/50 border border-primary/20 rounded flex items-center">
+                    <i class="ri-server-line text-primary mr-1"></i>
+                    <span>SERVEURS: OPÉRATIONNELS</span>
+                </div>
+                <div class="text-xs px-2 py-1 bg-black/50 border border-primary/20 rounded flex items-center">
+                    <i class="ri-user-3-line text-primary mr-1"></i>
+                    <span>AGENTS ACTIFS: <span id="activeAgents">--</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-primary/10 text-center text-xs text-gray-600">
+            <p>Ce site est une simulation à but ludique et pédagogique. Toute ressemblance avec des entités réelles est fictive. <a href="clauses.html" class="underline hover:text-primary">Lire le disclaimer complet</a>.</p>
+        </div>
+    </div>
+</footer>
+  <script type="module" src="./js/dynamic-dates.js"></script>
+  <script type="module" src="./js/defi3.js"></script>
+<script src="js/index.js"></script>
+<script src="js/static-status.js"></script>
+</body>
+<script src="./js/log-generator.js" defer></script>
+</html>

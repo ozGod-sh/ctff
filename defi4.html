@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Défi 4 - Infiltration Système</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Le CSS du terminal est ici, le JS est chargé à la fin du body pour des raisons de performance et de dépendances. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.terminal/css/jquery.terminal.min.css"/>
+
+    <style>
+        body { font-family: 'Fira Code', monospace; }
+        .glitch{color:#ff3e3e;text-shadow:2px 0 #00ff9d,-2px 0 #fff;letter-spacing:.04em}
+        #terminal-container {
+            --background: #0a0e17;
+            --color: #d1d5db;
+            --prompt: #00ff9d;
+            height: 600px;
+        }
+        .terminal .terminal-output .terminal-line span[style*="color:#00ff9d"] { font-weight: bold; }
+        .popup-success{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(10,14,23,.95);display:flex;align-items:center;justify-content:center;z-index:1000}
+        .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(0, 255, 231, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 231, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: grid-move 20s linear infinite;
+  }
+  @keyframes grid-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+  }
+    </style>
+</head>
+<body class="min-h-screen bg-[#0a0e17] text-gray-200 flex flex-col custom-scrollbar cyber-grid">
+
+    <header class="w-full py-4 px-6 border-b border-primary/30 flex justify-between items-center sticky top-0 z-10 backdrop-blur-sm bg-[#0a0e17]/80">
+    <div class="flex items-center">
+      <a href="index.html" class="orbitron text-sm md:text-base hover:underline">CTF by CYBERSEC-BJ.TECH</a>
+    </div>
+    <div class="flex items-center space-x-6">
+      <div class="hidden md:flex items-center space-x-4">
+        <div class="text-red-500 orbitron font-bold blink text-sm md:text-base">CONFIDENTIEL</div>
+        <div class="h-4 w-px bg-gray-500"></div>
+        <div class="text-primary orbitron text-sm md:text-base">OPÉRATION PHÉNIX</div>
+      </div>
+      <div class="flex items-center bg-black/50 px-3 py-1 rounded border border-primary/30">
+        <i class="ri-time-line mr-2 text-primary"></i>
+        <div id="countdown" class="orbitron text-sm md:text-base">--:--:--</div>
+      </div>
+    </div>
+  </header>
+
+    <main class="flex-1 container mx-auto px-4 py-10 max-w-7xl flex flex-col">
+        <div class="w-full bg-black/60 border border-primary/30 rounded-lg p-8 shadow-lg">
+            <div class="flex items-center mb-4 gap-3">
+                <i class="ri-terminal-window-line text-primary text-2xl"></i>
+                <h2 class="orbitron text-xl text-primary">Défi 4 : <span class="glitch">Infiltration et Neutralisation</span></h2>
+            </div>
+            <p class="text-gray-400 mb-6">Agent, les renseignements que vous avez collectés lors des défis précédents ont été décisifs. Grâce à l'analyse des communications interceptées et des failles découvertes, la CNIN a pu identifier une porte dérobée vers le serveur personnel de l'agent renégat, Zane Cipher. C'est le cœur de l'opération PHÉNIX. Votre mission : infiltrer son système, comprendre ses motivations, et utiliser ses propres outils contre lui pour neutraliser l'attaque imminente. Le sort de nos infrastructures repose sur vous.</p>
+            <div id="countdown-timer" class="hidden text-center my-4 orbitron text-2xl text-red-500 animate-pulse"></div>
+
+            <div id="terminal-container">
+                <!-- Le terminal jQuery sera injecté ici -->
+            </div>
+
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="index.html" class="text-primary underline text-sm"><i class="ri-arrow-left-line mr-1"></i>Retour à l'accueil</a>
+        </div>
+    </main>
+
+    <!-- Popup de succès final -->
+    <div id="popupSuccess" class="popup-success" style="display:none;">
+        <div class="max-w-md w-full bg-black/80 border-2 border-primary/40 rounded-xl p-8 shadow-2xl text-center flex flex-col items-center">
+            <i class="ri-shield-check-line text-6xl text-primary mb-4 animate-pulse"></i>
+            <div class="orbitron text-2xl text-primary mb-2">Opération PHÉNIX Réussie</div>
+            <div id="successMessage" class="text-gray-200 mb-6">Message de succès...</div>
+            <a href="index.html" class="btn-primary px-6 py-2 rounded transition flex items-center justify-center text-base">
+                <i class="ri-arrow-left-line mr-2"></i>Retour à l'accueil
+            </a>
+        </div>
+    </div>
+
+    <footer class="w-full py-6 px-6 border-t border-primary/30 mt-auto text-gray-400">
+    <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mb-4 md:mb-0">
+                <p class="text-sm">&copy; 2025 ctf by CYBERSEC-BJ.TECH</p>
+                <div class="text-xs text-gray-500 flex items-center justify-center md:justify-start gap-2 mt-2" style="font-family: 'Share Tech Mono', monospace;">
+                    <i class="ri-git-branch-line"></i>
+                    <span>Crée et designé par <a href="https://github.com/ozGod" target="_blank" rel="noopener noreferrer" class="text-primary/80 hover:text-primary transition-colors"><strong>ozGod</strong></a> pour <a href="#" class="text-primary/80 hover:text-primary font-bold transition-colors">BJWHITEHATs</a></span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-xs px-2 py-1 bg-black/50 border border-primary/20 rounded flex items-center">
+                    <i class="ri-server-line text-primary mr-1"></i>
+                    <span>SERVEURS: OPÉRATIONNELS</span>
+                </div>
+                <div class="text-xs px-2 py-1 bg-black/50 border border-primary/20 rounded flex items-center">
+                    <i class="ri-user-3-line text-primary mr-1"></i>
+                    <span>AGENTS ACTIFS: <span id="activeAgents">--</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-primary/10 text-center text-xs text-gray-600">
+            <p>Ce site est une simulation à but ludique et pédagogique. Toute ressemblance avec des entités réelles est fictive. <a href="clauses.html" class="underline hover:text-primary">Lire le disclaimer complet</a>.</p>
+        </div>
+    </div>
+</footer>
+
+    <!-- Dépendances chargées en premier -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/jquery.terminal.min.js"></script>
+
+    <!-- Scripts de l'application -->
+          <script type="module" src="./js/dynamic-dates.js"></script>
+ 
+      <script type="module" src="./js/defi4.js"></script>
+      <script src="js/index.js"></script>
+      <script src="js/static-status.js"></script>
+</body>
+</html> 

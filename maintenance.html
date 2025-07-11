@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance en cours – Opération PHÉNIX</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .maintenance-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #00ffe7;
+      border-radius: 50%;
+      animation: float 8s infinite linear;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
+    
+    .pulse-ring {
+      animation: pulse-ring 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.8);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.3;
+      }
+      100% {
+        transform: scale(0.8);
+        opacity: 1;
+      }
+    }
+    
+    .loading-dots::after {
+      content: '';
+      animation: loading-dots 1.5s infinite;
+    }
+    
+    @keyframes loading-dots {
+      0%, 20% { content: ''; }
+      40% { content: '.'; }
+      60% { content: '..'; }
+      80%, 100% { content: '...'; }
+    }
+    
+    .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(0, 255, 231, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 231, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: grid-move 20s linear infinite;
+    }
+    
+    @keyframes grid-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0a0e17] text-gray-200 flex flex-col cyber-grid">
+  
+  <!-- Animated particles background -->
+  <div class="maintenance-particles" id="particles"></div>
+  
+  <main class="flex-1 flex flex-col items-center justify-center px-4 py-10 relative z-10">
+    <div class="max-w-xl w-full bg-black/70 border border-primary/30 rounded-lg p-8 shadow-lg text-center relative overflow-hidden">
+      
+      <!-- Animated border effect -->
+      <div class="absolute inset-0 border-2 border-primary/20 rounded-lg pulse-ring"></div>
+      
+      <div class="flex flex-col items-center mb-6 relative z-10">
+        <div class="relative mb-4">
+          <i class="ri-tools-line text-primary text-5xl animate-pulse"></i>
+          <div class="absolute inset-0 text-primary text-5xl opacity-30 animate-ping">
+            <i class="ri-tools-line"></i>
+          </div>
+        </div>
+        
+        <h2 class="orbitron text-2xl md:text-3xl text-primary mb-2">Maintenance en cours</h2>
+        <span class="text-xs bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded">
+          Mise à jour des systèmes de sécurité
+        </span>
+      </div>
+      
+      <div class="mb-6 text-xs text-gray-400">
+        <span>STATUT SYSTÈME :</span>
+        <span class="text-yellow-400 font-bold loading-dots">En maintenance</span> •
+        <span>ACCÈS :</span>
+        <span class="text-red-400">Temporairement suspendu</span> •
+        <span class="maintenance-date">Chargement...</span>
+      </div>
+      
+      <div class="space-y-4 text-sm md:text-base mb-6">
+        <div class="bg-primary/10 border border-primary/20 rounded-lg p-4">
+          <div class="flex items-start">
+            <i class="ri-information-line text-primary mr-3 mt-0.5 text-lg"></i>
+            <div class="text-left">
+              <p class="text-primary font-bold mb-2">⚡ Opération PHÉNIX temporairement suspendue</p>
+              <p class="text-gray-300">
+                Nos équipes travaillent actuellement sur l'amélioration des systèmes de cybersécurité. 
+                <span class="text-primary">Cette maintenance est nécessaire pour garantir la sécurité de la mission.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
+          <div class="flex items-start">
+            <i class="ri-time-line text-yellow-400 mr-3 mt-0.5 text-lg"></i>
+            <div class="text-left">
+              <p class="text-yellow-400 font-bold mb-2">🔧 Maintenance programmée</p>
+              <p class="text-gray-300">
+                Durée estimée : <span class="text-yellow-400 font-bold">Quelques minutes</span><br>
+                Les systèmes seront rétablis automatiquement une fois la maintenance terminée.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Loading animation -->
+      <div class="mb-6">
+        <div class="flex items-center justify-center space-x-2 mb-3">
+          <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0ms;"></div>
+          <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 150ms;"></div>
+          <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 300ms;"></div>
+        </div>
+        <p class="text-xs text-gray-400">Mise à jour en cours...</p>
+      </div>
+      
+      <!-- Contact information -->
+      <div class="bg-black/50 border border-gray-700 rounded-lg p-4">
+        <p class="text-xs text-gray-400 mb-2">En cas d'urgence, contactez l'équipe technique :</p>
+        <div class="flex items-center justify-center space-x-4 text-xs">
+          <span class="flex items-center">
+            <i class="ri-mail-line mr-1 text-primary"></i>
+            <span class="text-primary">support@cybersec-bj.tech</span>
+          </span>
+          <span class="text-gray-500">•</span>
+          <span class="text-gray-400">ID Maintenance: #MNT-<span id="maintenanceId">Chargement...</span></span>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <footer class="w-full py-4 px-6 border-t border-primary/30 text-center text-xs text-gray-500 relative z-10">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <div>
+        © <span class="copyright-year">Chargement...</span> CTF by CYBERSEC-BJ.TECH – Maintenance en cours
+      </div>
+      <div class="flex items-center space-x-4 mt-2 md:mt-0">
+        <div class="flex items-center">
+          <div class="w-2 h-2 bg-yellow-400 rounded-full mr-2 animate-pulse"></div>
+          <span>Maintenance active</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/dynamic-dates.js"></script>
+  <script>
+    // Animated particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      
+      function createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 8 + 's';
+        particle.style.animationDuration = (Math.random() * 8 + 8) + 's';
+        particlesContainer.appendChild(particle);
+
+        setTimeout(() => {
+          particle.remove();
+        }, 16000);
+      }
+
+      setInterval(createParticle, 500);
+    }
+
+    // Auto-refresh check
+    function checkMaintenanceStatus() {
+      fetch('api/maintenance_check.php')
+        .then(response => response.json())
+        .then(data => {
+          if (!data.maintenance_mode) {
+            // Maintenance is over, redirect to home
+            window.location.href = 'index.html';
+          }
+        })
+        .catch(error => {
+          // If there's an error checking, try again in 30 seconds
+          setTimeout(checkMaintenanceStatus, 30000);
+        });
+    }
+
+    // Generate random maintenance ID
+    function generateMaintenanceId() {
+      const id = Math.floor(Math.random() * 9000) + 1000;
+      document.getElementById('maintenanceId').textContent = id;
+    }
+
+    // Update current date
+    function updateMaintenanceDate() {
+      const now = new Date();
+      const formatted = now.toLocaleDateString('fr-FR', {
+        day: '2-digit',
+        month: '2-digit', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      const dateElements = document.querySelectorAll('.maintenance-date');
+      dateElements.forEach(el => {
+        el.textContent = formatted;
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      createParticles();
+      generateMaintenanceId();
+      updateMaintenanceDate();
+      
+      // Check maintenance status every 10 seconds
+      setInterval(checkMaintenanceStatus, 10000);
+      
+      // Update time every minute
+      setInterval(updateMaintenanceDate, 60000);
+    });
+  </script>
+</body>
+</html>
